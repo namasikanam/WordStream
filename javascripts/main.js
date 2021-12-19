@@ -6,9 +6,9 @@ var svg = d3.select("body").append('svg')
         width: 1400,
         height: 660
     });
-var fileList = ["WikiNews", "Huffington", "CrooksAndLiars", "EmptyWheel", "Esquire", "FactCheck", "VIS_papers", "IMDB", "PopCha", "Cards_PC", "Cards_Fries", "QuantumComputing"]
+var fileList = ["Hole", "WikiNews", "Huffington", "CrooksAndLiars", "EmptyWheel", "Esquire", "FactCheck", "VIS_papers", "IMDB", "PopCha", "Cards_PC", "Cards_Fries", "QuantumComputing"]
 
-var initialDataset = "EmptyWheel";
+var initialDataset = "Hole";
 var categories = ["person", "location", "organization", "miscellaneous"];
 
 var fileName;
@@ -86,6 +86,11 @@ function loadData() {
         loadBlogPostData(draw, initTop);
         document.getElementById("rel").checked = true;
     }
+    else if (fileName.indexOf("Hole") >= 0) {
+        fileName = "data/THU_Hole.json";
+        categories = ["学习", "日常", "娱乐", "树洞", "感情", "时事", "未来规划", "疫情", "美食", "政治"];
+        loadHoleData(draw, initTop);
+    }
     else {
         categories = ["person", "location", "organization", "miscellaneous"];
         loadBlogPostData(draw, initTop);
@@ -158,12 +163,12 @@ function draw(data) {
         dates.push(row.date);
     });
 
-    var xAxisScale = d3.scale.ordinal().domain(dates).rangeBands([0, width]);
-    var xAxis = d3.svg.axis().orient('bottom').scale(xAxisScale);
+    // var xAxisScale = d3.scale.ordinal().domain(dates).rangeBands([0, width]);
+    // var xAxis = d3.svg.axis().orient('bottom').scale(xAxisScale);
 
-    axisGroup.attr('transform', 'translate(' + (margins.left) + ',' + (height + margins.top + axisPadding + legendHeight) + ')');
-    var axisNodes = axisGroup.call(xAxis);
-    styleAxis(axisNodes);
+    // axisGroup.attr('transform', 'translate(' + (margins.left) + ',' + (height + margins.top + axisPadding + legendHeight) + ')');
+    // var axisNodes = axisGroup.call(xAxis);
+    // styleAxis(axisNodes);
 
     //Display the vertical gridline
     var xGridlineScale = d3.scale.ordinal().domain(d3.range(0, dates.length + 1)).rangeBands([0, width + width / boxes.data.length]);
